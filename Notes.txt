@@ -1,0 +1,24 @@
+Things I want my tour software to do (purely for my own use, not as a product):
+>Generate brackets for swiss stage
+>Calculate optimal number of rounds, based on minimum  number of rounds desired and how many players progress through to elimination stage (aim to minimise tiebreaks)
+>Calculate countback and use it for seeding
+>Generate graphical output for each round's matchups
+>Store player info (Name, alias[username], [notes]teams used)
+>Save all results
+>Save all info about tour to .tour file (or something like that)
+>Export tournament data to a database (may need to provide framework of how db is set up, also what kind of db it is)
+>Also display some data as a spreadsheet (data grid)
+
+Long term goals
+>Support for all common formats (single/double elim, RR)
+>Support for group stages
+>Support for flexible multi-stage tours
+
+Current task:
+Maybe tab between first and second stages
+Setting up tour- want to have an add player form, where I add all the info necessary for a new player.
+Also want to display players already registered, and the number of participants
+Option to view player info
+Option to preview point distribution/bracket. Use this to determine no. of rounds
+Option to set number of rounds
+Option to close signups
