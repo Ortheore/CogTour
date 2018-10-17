@@ -5,19 +5,29 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CogTour"
         mc:Ignorable="d"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}"
         Title="CogTour" Height="Auto" Width="Auto">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="41*"/>
+            <ColumnDefinition Width="54*"/>
+        </Grid.ColumnDefinitions>
         <TextBlock x:Name="tbkTitle" HorizontalAlignment="Left" Margin="5,5,0,0" TextWrapping="Wrap" Text="CogTour" VerticalAlignment="Top" FontSize="20"/>
-        <Button x:Name="btnNew" Content="New Tournament " HorizontalAlignment="Right" Margin="0,10,120,0" VerticalAlignment="Top" Width="Auto"/>
-        <Button x:Name="btnLoad" Content="Load Tournament " HorizontalAlignment="Right" Margin="0,10,10,0" VerticalAlignment="Top"/>
-        <TabControl x:Name="tabControl" HorizontalAlignment="Stretch" Height="Auto" VerticalAlignment="Stretch" Width="Auto" Margin="0,40,0,0">
+        <Button x:Name="btnNew" Content="New Tournament " HorizontalAlignment="Right" Margin="0,10,215,0" VerticalAlignment="Top" Width="Auto" Click="btnNew_Click" Grid.Column="1"/>
+        <Button x:Name="btnSaveTour" Content="Save Tournament" HorizontalAlignment="Right" Margin="0,10,115,0" VerticalAlignment="Top" Width="Auto" Click="btnSaveTour_Click" Grid.Column="1"/>
+        <Button x:Name="btnLoad" Content="Load Tournament " HorizontalAlignment="Right" Margin="0,10,10,0" VerticalAlignment="Top" Grid.Column="1" Click="btnLoad_Click"/>
+        <Label x:Name="lblTourName" Content="Tournament Name" HorizontalAlignment="Right" Margin="0,30,306,0" VerticalAlignment="Top" Grid.Column="1"/>
+        <TextBox x:Name="tbxTourName" HorizontalAlignment="Right" Height="23" Margin="0,35,181,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Grid.Column="1"/>
+        <Label x:Name="lblGame" Content="Game" HorizontalAlignment="Right" Margin="0,30,135,0" VerticalAlignment="Top" Grid.Column="1"/>
+        <TextBox x:Name="tbxGame" HorizontalAlignment="Right" Height="23" Margin="0,35,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Grid.Column="1"/>
+        <TabControl x:Name="tabControl" HorizontalAlignment="Stretch" Height="Auto" VerticalAlignment="Stretch" Width="Auto" Margin="0,57,0,0" IsEnabled="False" Grid.ColumnSpan="2">
             <TabItem Header="Swiss">
                 <Grid Background="#FFE5E5E5">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="2*"/>
                         <ColumnDefinition Width="3*"/>
                     </Grid.ColumnDefinitions>
-                    <Grid Grid.Column="0">
+                    <Grid x:Name="grdPlayerInfo" Grid.Column="0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="2*"/>
                             <ColumnDefinition Width="3*"/>
@@ -29,26 +39,51 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
-                        <TextBlock x:Name="tbkSignups" HorizontalAlignment="Left" Margin="5,5,0,0" TextWrapping="Wrap" Text="Signups" VerticalAlignment="Top" FontSize="16" Grid.Row="0"/>
+                        <TextBlock x:Name="tbkSignups" HorizontalAlignment="Left" Margin="5,5,0,0" TextWrapping="Wrap" Text="Signups (new)" VerticalAlignment="Top" FontSize="16" Grid.Row="0"/>
+                        <Button x:Name="btnSetNewPlayer" Content="New Player" HorizontalAlignment="Left" Margin="0,7,0,0" VerticalAlignment="Top" Width="Auto"
+                     Grid.Column="1" Grid.Row="0" Click="btnSetNewPlayer_Click" />
                         <Label x:Name="lblFirstName" Content="First Name" HorizontalAlignment="Left" Margin="5,30,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="0"/>
-                        <TextBox x:Name="tbxFirstName" HorizontalAlignment="Left" Height="23" Margin="0,30,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Grid.Column="1" Grid.Row="0"/>
+                        <TextBox x:Name="tbxFirstName" HorizontalAlignment="Left" Height="23" Margin="0,30,0,0" TextWrapping="Wrap" Text="{Binding Path=FirstName, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="120" Grid.Column="1" Grid.Row="0"/>
                         <Label x:Name="lblSurname" Content="Surname" HorizontalAlignment="Left" Margin="5,5,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="1"/>
-                        <TextBox x:Name="tbxSurname" HorizontalAlignment="Left" Height="23" Margin="0,5,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Grid.Column="1" Grid.Row="1"/>
+                        <TextBox x:Name="tbxSurname" HorizontalAlignment="Left" Height="23" Margin="0,5,0,0" TextWrapping="Wrap" Text="{Binding Path=Surname, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="120" Grid.Column="1" Grid.Row="1"/>
                         <Label x:Name="lblUsername" Content="Screen Name" HorizontalAlignment="Left" Margin="5,5,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="2"/>
-                        <TextBox x:Name="tbxUsername" HorizontalAlignment="Left" Height="23" Margin="0,5,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Grid.Column="1" Grid.Row="2"/>
+                        <TextBox x:Name="tbxUsername" HorizontalAlignment="Left" Height="23" Margin="0,5,0,0" TextWrapping="Wrap" Text="{Binding Path=Username, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="120" Grid.Column="1" Grid.Row="2"/>
                         <Label x:Name="lblPhone" Content="Phone Number" HorizontalAlignment="Left" Margin="5,5,0,0" VerticalAlignment="Top" Grid.Row="3" Grid.Column="0"/>
-                        <TextBox x:Name="tbxPhone" HorizontalAlignment="Left" Height="23" Margin="0,5,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Grid.Row="3" Grid.Column="1"/>
+                        <TextBox x:Name="tbxPhone" HorizontalAlignment="Left" Height="23" Margin="0,5,0,0" TextWrapping="Wrap" Text="{Binding Path=PhoneNum, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="120" Grid.Row="3" Grid.Column="1"/>
                         <Label x:Name="lblEmail" Content="Email" HorizontalAlignment="Left" Margin="5,5,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="4"/>
-                        <TextBox x:Name="tbxEmail" HorizontalAlignment="Left" Height="23" Margin="0,5,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Grid.Column="1" Grid.Row="4"/>
+                        <TextBox x:Name="tbxEmail" HorizontalAlignment="Left" Height="23" Margin="0,5,0,0" TextWrapping="Wrap" Text="{Binding Path=Email, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="120" Grid.Column="1" Grid.Row="4"/>
                         <Label x:Name="lblTeam" Content="Team" HorizontalAlignment="Left" Margin="5,5,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="5"/>
-                        <TextBox x:Name="tbxTeam" HorizontalAlignment="Left" Height="23" Margin="0,5,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Grid.Column="1" Grid.Row="5"/>
+                        <TextBox x:Name="tbxTeam" HorizontalAlignment="Left" Height="150" Margin="0,5,0,0" TextWrapping="Wrap" Text="{Binding Path=Team, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="120" Grid.Column="1" Grid.Row="5" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"/>
+                        <Button x:Name="btnSave" Content="Save" HorizontalAlignment="Left" Margin="0,5,5,0" VerticalAlignment="Top" Width="75" Grid.Column="1" Grid.Row="6" Click="btnSave_Click"/>
                     </Grid>
+                    <Grid Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock x:Name="tbkPlayerHeader" Grid.Column="0" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Player List" VerticalAlignment="Top" FontSize="16"/>
+                        <TextBlock x:Name="tbkPlayerNoLabel" Grid.Column="0" HorizontalAlignment="Left" Margin="10,36,0,0" TextWrapping="Wrap" Text="Number of entrants: " VerticalAlignment="Top"/>
+                        <TextBlock x:Name="tbkPlayerNum" Grid.Column="0" HorizontalAlignment="Left" Margin="125,36,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top"/>
+                        <DataGrid x:Name="dgdPlayerList" Grid.Column="0" HorizontalAlignment="Stretch" Height="300" Margin="10,57,0,0" VerticalAlignment="Top" Width="Auto" DataContext="tour" ItemsSource="{Binding Source=entrants}"/>
+                        <Label x:Name="lblNumRounds" Content="Number of rounds: " Grid.Column="1" HorizontalAlignment="Left" Margin="0,5,0,0" VerticalAlignment="Top"/>
+                        <TextBox x:Name="tbxNumRounds" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="91,29,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="80"/>
+                        <Button x:Name="btnPreviewPoints" Content="Preview Point Distributions" Grid.Column="1" HorizontalAlignment="Left" Margin="25,57,0,0" VerticalAlignment="Top" Width="Auto"/>
+                        <Button x:Name="btnCommence" Content="Commence Tour" Grid.Column="1" HorizontalAlignment="Left" Margin="81,82,0,0" VerticalAlignment="Top" Width="Auto"/>
+                        <TextBlock x:Name="tbkCurRound" Grid.Column="1" HorizontalAlignment="Left" Margin="10,121,0,0" TextWrapping="Wrap" Text="Current round:" VerticalAlignment="Top"/>
+                        <TextBlock x:Name="tbkRoundNum" Grid.Column="1" HorizontalAlignment="Left" Margin="92,121,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top"/>
+                        <Button x:Name="btnViewCurRound" Content="View Current Round" Grid.Column="1" HorizontalAlignment="Left" Margin="65,142,0,0" VerticalAlignment="Top" Width="Auto"/>
+                        <Button x:Name="btnGenNextRound" Content="Next Round" Grid.Column="1" HorizontalAlignment="Left" Margin="96,167,0,0" VerticalAlignment="Top" Width="75"/>
+                        <TextBox x:Name="tbxSelRound" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="5,195,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="80"/>
+                        <Button x:Name="btnSelectRound" Content="Select Round" Grid.Column="1" HorizontalAlignment="Left" Margin="96,198,0,0" VerticalAlignment="Top" Width="75"/>
+                    </Grid>
+
                 </Grid>
             </TabItem>
             <TabItem Header="Elim">
                 <Grid Background="#FFE5E5E5">
-                    
+
                 </Grid>
             </TabItem>
         </TabControl>

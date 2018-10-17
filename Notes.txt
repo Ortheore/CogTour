@@ -15,6 +15,21 @@ Long term goals
 >Support for flexible multi-stage tours
 
 Current task:
+Currently working on binding things in the UI so the interface is nice and interactive
+For the binding to work as I think it should, the relevant class should implement the INotifyPropertyChanged interface, and the data context should be set to the right object before updating.
+Currently have an example set up with the Player class and the New Player button
+I should be able to just make the Tournament class implement this and then go through its properties in the path?
+FUCK THAT, JUST MAKE A FUNCTION UPDATING UI, ONE THAT ACCEPTS A PLAYER AS INPUT, ANOTHER THAT RETURNS A PLAYER
+NVM, NEED THE INOTIFY THING FOR THE DATAGRID
+Ok, I want to set the datacontext for the window to itself, which works fine. however I then want to bind to properties of curPlayer, which is contained within the main window, however I've been unable to succeed via directly binding to it or by setting the local datacontext via xaml (I have succeeded via code, but I should be able to find a solution that doesn't require me to tinker with it every time I want to bind something)
+OK realised that the issue is that Property Changed event isn't firing
+FIXED!!!!!!!!
+Need to implement bindings for all input fields and datagrid
+Currently none of the input fields work... except for first name... why? The event handler isn't getting called on the ones that don't work. NVM event handler is getting called when values are set via code, but not via input... which means the bindings are fucked
+Setting a breakpoint and checking the DataContext for the different elements reveals that the data context for first name is CogTour.Player, whereas the others are "curPlayer". OML, just realised I was setting the data context for first name programmatically, which is why it worked. 
+
+Regarding UI, probably want to put the text boxes for tour name/game over the buttons for new/save/load
+
 Maybe tab between first and second stages
 Setting up tour- want to have an add player form, where I add all the info necessary for a new player.
 Also want to display players already registered, and the number of participants
@@ -22,3 +37,15 @@ Option to view player info
 Option to preview point distribution/bracket. Use this to determine no. of rounds
 Option to set number of rounds
 Option to close signups
+
+Things to do later===========
+>Error message for trying to save a null tour
+>Input validation for adding a new player
+>Error message for somehow setting a player index <-1 (technically <0, but -1 is already handled)
+
+Classes I will need:
+Tour class (Date, What is being played, List of players, List of stages)
+Stage Class(Type of stage (swiss, elim, etc), List of rounds, List of players)
+Class for each type of stage (inherits from stage obviously)
+Player class (Screen name, Real name, email, contact No.)
+Player class for each stage (inherits from player obviously).
