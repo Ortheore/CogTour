@@ -13,6 +13,7 @@ namespace CogTour
         //Set all variables as properties for use in binding and the PropertyChanged event
         public event PropertyChangedEventHandler PropertyChanged;
         private string username, firstName, surname, phoneNum, email, team;
+        protected int indexKey;//to be used in making sure derived classes can refer to the right parent class in something like a list. indexKey should be kept the same in this class and any derived classes
         public string Username
         {
             get { return this.username; }
@@ -116,13 +117,18 @@ namespace CogTour
             this.username = username;
         }
 
-        private void NotifyPropertyChange(string propertyName)
+        protected void NotifyPropertyChange(string propertyName)
         {
             PropertyChangedEventHandler handler = PropertyChanged;
             if (handler != null)
             {
                 handler(this, new PropertyChangedEventArgs(propertyName));
             }
+        }
+
+        private void UpdateIndexKey(int index)
+        {
+            this.indexKey = index;
         }
     }
 }

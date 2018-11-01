@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 
 namespace CogTour
 {
     [Serializable]
     class Tournament
     {
-        public List<Player> entrants = new List<Player>();
+        public ObservableCollection<Player> entrants = new ObservableCollection<Player>();
         private List<Object> stages = new List<Object>();
         public string name { get; set; }
         public string game { get; set; }
@@ -21,7 +22,6 @@ namespace CogTour
             this.game = game;
             this.date = DateTime.Now;
         }
-        //should I add a separate mod function? It would be pretty much identical to the constructor, but I probably shouldn't be calling the constructor for that purpose
 
         public void AddPlayer(Player newPlayer)
         {

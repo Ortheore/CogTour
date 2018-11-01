@@ -15,20 +15,20 @@ Long term goals
 >Support for flexible multi-stage tours
 
 Current task:
-Currently working on binding things in the UI so the interface is nice and interactive
-For the binding to work as I think it should, the relevant class should implement the INotifyPropertyChanged interface, and the data context should be set to the right object before updating.
-Currently have an example set up with the Player class and the New Player button
-I should be able to just make the Tournament class implement this and then go through its properties in the path?
-FUCK THAT, JUST MAKE A FUNCTION UPDATING UI, ONE THAT ACCEPTS A PLAYER AS INPUT, ANOTHER THAT RETURNS A PLAYER
-NVM, NEED THE INOTIFY THING FOR THE DATAGRID
-Ok, I want to set the datacontext for the window to itself, which works fine. however I then want to bind to properties of curPlayer, which is contained within the main window, however I've been unable to succeed via directly binding to it or by setting the local datacontext via xaml (I have succeeded via code, but I should be able to find a solution that doesn't require me to tinker with it every time I want to bind something)
-OK realised that the issue is that Property Changed event isn't firing
-FIXED!!!!!!!!
-Need to implement bindings for all input fields and datagrid
-Currently none of the input fields work... except for first name... why? The event handler isn't getting called on the ones that don't work. NVM event handler is getting called when values are set via code, but not via input... which means the bindings are fucked
-Setting a breakpoint and checking the DataContext for the different elements reveals that the data context for first name is CogTour.Player, whereas the others are "curPlayer". OML, just realised I was setting the data context for first name programmatically, which is why it worked. 
 
-Regarding UI, probably want to put the text boxes for tour name/game over the buttons for new/save/load
+PLAN OF ATTACK=====
+Create list of stageplayers based on tournament entrant list
+Create script to generate list of matches
+Create popup window to view all matches
+Edit popup window so scores can be recorded
+When round finished, progress to next round
+When round finished, update data grid
+When data grid entry clicked, display player info
+Preview point distributions in popup window
+
+===============
+
+Regarding UI, probably want to put the text boxes for tour name/game over the buttons for new/save/load. Actually this whole thing needs fixing up, as interactions are a fucking mess
 
 Maybe tab between first and second stages
 Setting up tour- want to have an add player form, where I add all the info necessary for a new player.
@@ -37,6 +37,10 @@ Option to view player info
 Option to preview point distribution/bracket. Use this to determine no. of rounds
 Option to set number of rounds
 Option to close signups
+Consider adding all generic tour info (player list, tour name and game) to separate tab. Currently it's all in swiss tab, which is bad for future modifications
+Stage windows should probably consist of player filter options, standings, and menu options to manipulate that stage, progress rounds, etc.
+
+Player index could be converted to just an ID rather than mirroring the index of the player object, and then to find a specific player just iterate through the list and find the matching id. This would probably be easier to implement
 
 Things to do later===========
 >Error message for trying to save a null tour

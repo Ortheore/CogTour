@@ -52,7 +52,7 @@ namespace CogTour
             }
             tour.ModTournament(tbxTourName.Text, tbxGame.Text);
             tour.SetDefaultStages();
-            tabControl.IsEnabled = true;
+            InitTour();
         }
 
         private void btnSaveTour_Click(object sender, RoutedEventArgs e)
@@ -97,13 +97,20 @@ namespace CogTour
                     tour = (Tournament)obj;
                     tbxTourName.Text = tour.name;
                     tbxGame.Text = tour.game;
-                    tabControl.IsEnabled = true;
+                    InitTour();
                 }
                 catch (Exception ex)
                 {
                     System.Windows.MessageBox.Show("Error reading tournament file.\nException: " + ex.Message);
                 }
             }
+        }
+
+        private void InitTour()
+        {
+            tabControl.IsEnabled = true;
+            grdSwissInfo.DataContext = tour;
+            dgdPlayerList.ItemsSource = tour.entrants;
         }
 
         private void btnSetNewPlayer_Click(object sender, RoutedEventArgs e)
@@ -117,7 +124,7 @@ namespace CogTour
         {
             bool inputValid = true;
             //Add input validation here.
-            //I'll worry about this later, as I'm initially going to be the only one using the software
+            //I'll worry about this later, as I'm initially going to be the only one using the software and I trust myself to use it correctly
             if (inputValid)
             {
                 if (playerIndex == -1)
@@ -136,6 +143,11 @@ namespace CogTour
                     }
                 }
             }
+        }
+
+        private void dgdPlayerList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            
         }
     }
 }

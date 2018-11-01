@@ -57,8 +57,10 @@
                         <Label x:Name="lblTeam" Content="Team" HorizontalAlignment="Left" Margin="5,5,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="5"/>
                         <TextBox x:Name="tbxTeam" HorizontalAlignment="Left" Height="150" Margin="0,5,0,0" TextWrapping="Wrap" Text="{Binding Path=Team, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="120" Grid.Column="1" Grid.Row="5" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"/>
                         <Button x:Name="btnSave" Content="Save" HorizontalAlignment="Left" Margin="0,5,5,0" VerticalAlignment="Top" Width="75" Grid.Column="1" Grid.Row="6" Click="btnSave_Click"/>
+                        <Button x:Name="btnDelete" Content="Delete" HorizontalAlignment="Left" Margin="80,5,0,0" VerticalAlignment="Top" Width="75" Grid.Column="1"
+                     Grid.Row="6"/>
                     </Grid>
-                    <Grid Grid.Column="1">
+                    <Grid x:Name="grdSwissInfo" Grid.Column="1">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="3*"/>
                             <ColumnDefinition Width="2*"/>
@@ -66,7 +68,13 @@
                         <TextBlock x:Name="tbkPlayerHeader" Grid.Column="0" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Player List" VerticalAlignment="Top" FontSize="16"/>
                         <TextBlock x:Name="tbkPlayerNoLabel" Grid.Column="0" HorizontalAlignment="Left" Margin="10,36,0,0" TextWrapping="Wrap" Text="Number of entrants: " VerticalAlignment="Top"/>
                         <TextBlock x:Name="tbkPlayerNum" Grid.Column="0" HorizontalAlignment="Left" Margin="125,36,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top"/>
-                        <DataGrid x:Name="dgdPlayerList" Grid.Column="0" HorizontalAlignment="Stretch" Height="300" Margin="10,57,0,0" VerticalAlignment="Top" Width="Auto" DataContext="tour" ItemsSource="{Binding Source=entrants}"/>
+                        <DataGrid x:Name="dgdPlayerList" Grid.Column="0" HorizontalAlignment="Stretch" Height="300" Margin="10,57,0,0" VerticalAlignment="Top" Width="Auto" AutoGenerateColumns="false" IsReadOnly="True" MouseDoubleClick="dgdPlayerList_MouseDoubleClick">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Username"            Binding="{Binding Username}"/>
+                                <DataGridTextColumn Header="Points" Binding="{Binding Path=Stages[0].score}"/>
+                                <DataGridTextColumn Header="Countback" Binding="{Binding Path=Stages[0].countback}"/>
+                            </DataGrid.Columns>
+                    </DataGrid>
                         <Label x:Name="lblNumRounds" Content="Number of rounds: " Grid.Column="1" HorizontalAlignment="Left" Margin="0,5,0,0" VerticalAlignment="Top"/>
                         <TextBox x:Name="tbxNumRounds" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="91,29,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="80"/>
                         <Button x:Name="btnPreviewPoints" Content="Preview Point Distributions" Grid.Column="1" HorizontalAlignment="Left" Margin="25,57,0,0" VerticalAlignment="Top" Width="Auto"/>
